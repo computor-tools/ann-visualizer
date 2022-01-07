@@ -1,6 +1,6 @@
 {
   "name": "ann-visulizer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Visualizes structure of ANN being trained by Qubic miners.",
   "packageManager": "pnpm@6.24.3",
   "scripts": {
