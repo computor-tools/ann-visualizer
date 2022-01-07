@@ -1,0 +1,53 @@
+{
+  "name": "ann-visulizer",
+  "version": "0.0.0",
+  "description": "Visualizes structure of ANN being trained by Qubic miners.",
+  "packageManager": "pnpm@6.24.3",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "lint:css": "stylelint './src/**/*.jsx'",
+    "format": "prettier --write --ignore-unknown .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": [
+      "eslint --cache --fix",
+      "stylelint --cache --fix",
+      "prettier --write"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write"
+    ]
+  },
+  "author": "Chris Dukakis <chrisdukakis@gmail.com>",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^1.1.4",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.5",
+    "prettier": "^2.5.1",
+    "react-is": "^17.0.2",
+    "rollup-plugin-license": "^2.6.1",
+    "styled-components": "^5.3.3",
+    "stylelint": "^14.2.0",
+    "stylelint-config-recommended": "^6.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0",
+    "vite": "^2.7.10",
+    "vite-plugin-singlefile": "^0.6.3"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "files": []
+}
