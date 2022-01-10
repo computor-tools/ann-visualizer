@@ -60,7 +60,28 @@ const Index = styled.div.attrs((props) => ({
 }))`
   position: fixed;
   font-family: 'Inconsolata', monospace;
-  color: yellow;
+  color: #fff;
+`;
+
+const Annotation = styled.div`
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px;
+  color: #777;
+  line-height: 180%;
+`;
+
+const Color = styled.span`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  background: ${function (props) {
+    return props.value;
+  }};
 `;
 
 const NUMBER_OF_NEURONS = 10000;
@@ -442,6 +463,22 @@ const App = function () {
       <Canvas width={window.innerWidth - 40} height={window.innerHeight - 40} ref={canvas} />
       <Canvas width={window.innerWidth - 40} height={window.innerHeight - 40} ref={canvas2} />
       <Canvas width={window.innerWidth - 40} height={window.innerHeight - 40} ref={canvas3} />
+      <Annotation>
+        <Color value="#444" />
+        <span>Dead neurons</span>
+        <br />
+        <Color value="red" />
+        <span>Live neurons</span>
+        <br />
+        <Color value="yellow" />
+        <span>Referenced neurons</span>
+        <br />
+        <Color value="purple" />
+        <span>Referrer neurons</span>
+        <br />
+        <Color value="cyan" />
+        <span>Referrer neurons (live)</span>
+      </Annotation>
       {currentIndex !== undefined && (
         <Index top={currentIndex.y + 40} left={currentIndex.x}>
           {currentIndex.i}
