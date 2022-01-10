@@ -363,6 +363,43 @@ const App = function () {
                       ctx2.closePath();
                     }
                   });
+
+                  ctx2.lineWidth = 1;
+                  ctx2.fillStyle = 'cyan';
+                  ctx2.strokeStyle = 'cyan';
+                  referrerNeurons.forEach(function (neuron) {
+                    if (neuron.state === true) {
+                      ctx2.beginPath();
+                      ctx2.arc(neuron.x, neuron.y, 1, 0, 2 * Math.PI);
+                      ctx2.stroke();
+                      ctx2.closePath();
+                    }
+                  });
+
+                  ctx2.lineWidth = 0.3;
+                  referrerNeurons.forEach(function (neuron) {
+                    if (neuron.state == true) {
+                      const referrers2 = referrers.get(neuron.i) || [];
+                      for (let k = 0; k < referrers2.length; k++) {
+                        if (structure[referrers2[k]].state === true) {
+                          ctx2.beginPath();
+                          ctx2.moveTo(neuron.x, neuron.y);
+                          ctx2.lineTo(structure[referrers2[k]].x, structure[referrers2[k]].y);
+                          ctx2.stroke();
+                          ctx2.closePath();
+                        }
+                      }
+                    }
+                  });
+
+                  ctx2.lineWidth = 3;
+                  ctx2.fillStyle = 'white';
+                  ctx2.strokeStyle = 'white';
+                  ctx2.beginPath();
+                  ctx2.arc(neuron.x, neuron.y, 1, 0, 2 * Math.PI);
+                  ctx2.stroke();
+                  ctx2.closePath();
+
                   break;
                 } else {
                   ctx2.clearRect(0, 0, canvas2.current.width, canvas2.current.height);
