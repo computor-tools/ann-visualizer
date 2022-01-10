@@ -122,7 +122,7 @@ const App = function () {
               structure[i].i = i;
               structure[i].state = false;
 
-              if (i >= 54) {
+              if (i > 54) {
                 let ref1 = referrers.get(data[j]);
                 if (ref1 === undefined) {
                   ref1 = [];
@@ -228,8 +228,10 @@ const App = function () {
                 analyzedNeurons.add(neuron.i);
                 liveNeurons.push(neuron);
                 neuron.state = true;
-                for (let k = 0; k < 3; k++) {
-                  nonAnalyzedNeurons.push(structure[neuron[k]]);
+                if (neuron.i > 54) {
+                  for (let k = 0; k < 3; k++) {
+                    nonAnalyzedNeurons.push(structure[neuron[k]]);
+                  }
                 }
               }
             }
@@ -288,7 +290,7 @@ const App = function () {
 
             ctx.lineWidth = 0.1;
             liveNeurons.forEach(function (neuron) {
-              if (neuron.i >= 54) {
+              if (neuron.i > 54) {
                 for (let k = 0; k < 3; k++) {
                   ctx.beginPath();
                   ctx.moveTo(neuron.x, neuron.y);
@@ -318,8 +320,10 @@ const App = function () {
                     if (!analyzedNeurons.has(neuron2.i)) {
                       analyzedNeurons.add(neuron2.i);
                       referencedNeurons.push(neuron2);
-                      for (let k = 0; k < 3; k++) {
-                        nonAnalyzedNeurons.push(structure[neuron2[k]]);
+                      if (neuron2.i > 54) {
+                        for (let k = 0; k < 3; k++) {
+                          nonAnalyzedNeurons.push(structure[neuron2[k]]);
+                        }
                       }
                     }
                   }
@@ -336,7 +340,7 @@ const App = function () {
 
                   ctx2.lineWidth = 0.1;
                   referencedNeurons.forEach(function (neuron) {
-                    if (neuron.i >= 54) {
+                    if (neuron.i > 54) {
                       for (let k = 0; k < 3; k++) {
                         ctx2.beginPath();
                         ctx2.moveTo(neuron.x, neuron.y);
