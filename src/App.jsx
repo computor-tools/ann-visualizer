@@ -4,7 +4,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    background: #121212;
+    background: #000;
   }
 `;
 
@@ -14,8 +14,8 @@ const Heading = styled.h1`
   font-size: 18px;
   font-family: 'Inconsolata', monospace;
   position: fixed;
-  top: 40px;
-  left: 40px;
+  top: 20px;
+  left: 20px;
   z-index: 1000;
   margin: 0;
 `;
@@ -23,8 +23,8 @@ const Heading = styled.h1`
 const Input = styled.input`
   margin: 0;
   position: fixed;
-  top: 40px;
-  right: 40px;
+  top: 20px;
+  right: 20px;
   padding: 10px;
   font-family: 'Inconsolata', monospace;
   color: #777;
@@ -101,27 +101,28 @@ const App = function () {
               structure[i].i = i;
               structure[i].state = false;
 
-              let ref1 = referrers.get(data[j]);
-              if (ref1 === undefined) {
-                ref1 = [];
-              }
-              ref1.push(i);
-              referrers.set(data[j], ref1);
+              if (i >= 54) {
+                let ref1 = referrers.get(data[j]);
+                if (ref1 === undefined) {
+                  ref1 = [];
+                }
+                ref1.push(i);
+                referrers.set(data[j], ref1);
 
-              let ref2 = referrers.get(data[j + 1]);
-              if (ref2 === undefined) {
-                ref2 = [];
-              }
-              ref2.push(i);
-              referrers.set(data[j + 1], ref2);
+                let ref2 = referrers.get(data[j + 1]);
+                if (ref2 === undefined) {
+                  ref2 = [];
+                }
+                ref2.push(i);
+                referrers.set(data[j + 1], ref2);
 
-              let ref3 = referrers.get(data[j + 2]);
-              if (ref3 === undefined) {
-                ref3 = [];
+                let ref3 = referrers.get(data[j + 2]);
+                if (ref3 === undefined) {
+                  ref3 = [];
+                }
+                ref3.push(i);
+                referrers.set(data[j + 2], ref3);
               }
-              ref3.push(i);
-              referrers.set(data[j + 2], ref3);
-
               j += 3;
             }
 
@@ -202,8 +203,8 @@ const App = function () {
             const analyzedNeurons = new Set();
             let neuron;
             while ((neuron = nonAnalyzedNeurons.shift()) !== undefined) {
-              if (!analyzedNeurons.has(neuron.toString())) {
-                analyzedNeurons.add(neuron.toString());
+              if (!analyzedNeurons.has(neuron.i)) {
+                analyzedNeurons.add(neuron.i);
                 liveNeurons.push(neuron);
                 neuron.state = true;
                 for (let k = 0; k < 3; k++) {
@@ -213,11 +214,11 @@ const App = function () {
             }
 
             ctx.lineWidth = 1;
+            ctx.fillStyle = 'red';
+            ctx.strokeStyle = 'red';
             liveNeurons.forEach(function (neuron) {
               ctx.beginPath();
               ctx.arc(neuron.x, neuron.y, 1, 0, 2 * Math.PI);
-              ctx.fillStyle = 'red';
-              ctx.strokeStyle = 'red';
               ctx.stroke();
               ctx.closePath();
             });
@@ -266,8 +267,8 @@ const App = function () {
 
             ctx.lineWidth = 0.1;
             liveNeurons.forEach(function (neuron) {
-              for (let k = 0; k < 3; k++) {
-                if (neuron[k] !== 0) {
+              if (neuron.i >= 54) {
+                for (let k = 0; k < 3; k++) {
                   ctx.beginPath();
                   ctx.moveTo(neuron.x, neuron.y);
                   ctx.lineTo(structure[neuron[k]].x, structure[neuron[k]].y);
@@ -293,8 +294,8 @@ const App = function () {
                   const analyzedNeurons = new Set();
                   let neuron2;
                   while ((neuron2 = nonAnalyzedNeurons.shift()) !== undefined) {
-                    if (!analyzedNeurons.has(neuron2.toString())) {
-                      analyzedNeurons.add(neuron2.toString());
+                    if (!analyzedNeurons.has(neuron2.i)) {
+                      analyzedNeurons.add(neuron2.i);
                       referencedNeurons.push(neuron2);
                       for (let k = 0; k < 3; k++) {
                         nonAnalyzedNeurons.push(structure[neuron2[k]]);
@@ -303,19 +304,19 @@ const App = function () {
                   }
 
                   ctx2.lineWidth = 1;
+                  ctx2.fillStyle = 'yellow';
+                  ctx2.strokeStyle = 'yellow';
                   referencedNeurons.forEach(function (neuron) {
                     ctx2.beginPath();
                     ctx2.arc(neuron.x, neuron.y, 1, 0, 2 * Math.PI);
-                    ctx2.fillStyle = 'yellow';
-                    ctx2.strokeStyle = 'yellow';
                     ctx2.stroke();
                     ctx2.closePath();
                   });
 
                   ctx2.lineWidth = 0.1;
                   referencedNeurons.forEach(function (neuron) {
-                    for (let k = 0; k < 3; k++) {
-                      if (neuron[k] !== 0) {
+                    if (neuron.i >= 54) {
+                      for (let k = 0; k < 3; k++) {
                         ctx2.beginPath();
                         ctx2.moveTo(neuron.x, neuron.y);
                         ctx2.lineTo(structure[neuron[k]].x, structure[neuron[k]].y);
@@ -342,28 +343,24 @@ const App = function () {
                   }
 
                   ctx2.lineWidth = 1;
-                  referrerNeurons.forEach(function (neuron, i) {
-                    if (i !== 0) {
-                      ctx2.beginPath();
-                      ctx2.arc(neuron.x, neuron.y, 1, 0, 2 * Math.PI);
-                      ctx2.fillStyle = 'purple';
-                      ctx2.strokeStyle = 'purple';
-                      ctx2.stroke();
-                      ctx2.closePath();
-                    }
+                  ctx2.fillStyle = 'purple';
+                  ctx2.strokeStyle = 'purple';
+                  referrerNeurons.forEach(function (neuron) {
+                    ctx2.beginPath();
+                    ctx2.arc(neuron.x, neuron.y, 1, 0, 2 * Math.PI);
+                    ctx2.stroke();
+                    ctx2.closePath();
                   });
 
                   ctx2.lineWidth = 0.3;
                   referrerNeurons.forEach(function (neuron) {
                     const referrers2 = referrers.get(neuron.i) || [];
                     for (let k = 0; k < referrers2.length; k++) {
-                      if (neuron[k] !== 0) {
-                        ctx2.beginPath();
-                        ctx2.moveTo(neuron.x, neuron.y);
-                        ctx2.lineTo(structure[referrers2[k]].x, structure[referrers2[k]].y);
-                        ctx2.stroke();
-                        ctx2.closePath();
-                      }
+                      ctx2.beginPath();
+                      ctx2.moveTo(neuron.x, neuron.y);
+                      ctx2.lineTo(structure[referrers2[k]].x, structure[referrers2[k]].y);
+                      ctx2.stroke();
+                      ctx2.closePath();
                     }
                   });
                   break;
